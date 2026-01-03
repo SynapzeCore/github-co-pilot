@@ -1,73 +1,98 @@
-# Welcome to your Lovable project
+# GitHub Agent
 
-## Project info
+A clean, Apple-inspired AI-powered interface for creating GitHub Issues and Pull Requests using natural language.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Overview
 
-## How can I edit this code?
+GitHub Agent is a frontend application that allows users to describe tasks in plain English, which are then interpreted by an AI agent to create GitHub Issues or PRs. The interface follows Apple's Human Interface Guidelines for a native, professional feel.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Natural Language Input** — Describe what you want in plain English
+- **AI Interpretation** — Agent parses intent and extracts structured data
+- **Preview & Confirm** — Review parsed data before execution
+- **GitHub-style Preview** — See how your issue/PR will appear
+- **Success/Error States** — Clear feedback on action results
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- React 18
+- TypeScript
+- Tailwind CSS
+- Vite
+- shadcn/ui components
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Install dependencies
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/
+│   ├── Header.tsx          # Top navigation bar
+│   ├── MessageInput.tsx    # Primary text input
+│   ├── UserMessage.tsx     # User message bubble
+│   ├── AgentMessage.tsx    # AI response with parsed data
+│   ├── PreviewCard.tsx     # Confirmation preview
+│   ├── LoadingState.tsx    # Processing indicator
+│   └── ResultState.tsx     # Success/error display
+├── lib/
+│   └── mockAgent.ts        # Simulated API responses
+├── types/
+│   └── agent.ts            # TypeScript definitions
+└── pages/
+    └── Index.tsx           # Main application page
+```
 
-**Use GitHub Codespaces**
+## Design Philosophy
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This application follows Apple's Human Interface Guidelines:
 
-## What technologies are used for this project?
+- **Clarity** — Clean typography and clear visual hierarchy
+- **Deference** — Content-first design, minimal chrome
+- **Depth** — Subtle shadows and layering for context
+- **Restraint** — No unnecessary animations or decorations
 
-This project is built with:
+## API Contract
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The frontend assumes a backend endpoint:
 
-## How can I deploy this project?
+```
+POST /agent/github
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Request:
+{
+  "prompt": "Create a bug issue for login failure"
+}
 
-## Can I connect a custom domain to my Lovable project?
+Response:
+{
+  "action": "create_issue" | "create_pr",
+  "parsed_data": {
+    "repo": "org/repo",
+    "title": "...",
+    "body": "...",
+    "labels": [],
+    "assignees": []
+  },
+  "status": "success" | "error",
+  "message": "..."
+}
+```
 
-Yes, you can!
+Currently uses mocked responses with simulated latency.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT
